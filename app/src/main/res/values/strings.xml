@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Football Counter</string>
+    <string name="resetText">RESET</string>
+    <string name="yellowText">yellow</string>
+    <string name="redText">red</string>
+    <string name="team_a_Text">Team A</string>
+    <string name="team_b_Text">Team B</string>
+    <string name="goalText">goal</string>
 </resources>
