@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void scoreForTeamX(View view) {
+        if (maximumRedCards()) {
+            return;
+        }
+
         Team team = Team.valueOf(view.getTag().toString());
         switch (team) {
             case A:
@@ -76,20 +80,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void redForTeamX(View view) {
+        if (maximumRedCards()) {
+            return;
+        }
+
         Team team = Team.valueOf(view.getTag().toString());
         switch (team) {
             case A:
-                redCardsTeamA += 1;
-                displayCardsForTeamX(Team.A, Card.RED, redCardsTeamA);
+                if (redCardsTeamA < 5) {
+                    redCardsTeamA += 1;
+                    displayCardsForTeamX(Team.A, Card.RED, redCardsTeamA);
+                }
                 break;
             case B:
-                redCardsTeamB += 1;
-                displayCardsForTeamX(Team.B, Card.RED, redCardsTeamB);
+                if (redCardsTeamB < 5) {
+                    redCardsTeamB += 1;
+                    displayCardsForTeamX(Team.B, Card.RED, redCardsTeamB);
+                }
                 break;
         }
     }
 
     public void yellowForTeamX(View view) {
+        if (maximumRedCards()) {
+            return;
+        }
+
         Team team = Team.valueOf(view.getTag().toString());
         switch (team) {
             case A:
@@ -114,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        TextView scoreView = (TextView) findViewById(viewId);
+        TextView scoreView = findViewById(viewId);
         scoreView.setText(String.valueOf(score));
     }
 
@@ -137,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        TextView scoreView = (TextView) findViewById(viewId);
+        TextView scoreView = findViewById(viewId);
         scoreView.setText(String.valueOf(score));
     }
 
@@ -164,4 +180,9 @@ public class MainActivity extends AppCompatActivity {
         displayCardsForTeamX(Team.A, Card.YELLOW, yellowCardsTeamA);
         displayCardsForTeamX(Team.B, Card.YELLOW, yellowCardsTeamB);
     }
+
+    public  boolean maximumRedCards(){
+        return redCardsTeamA == 5 || redCardsTeamB == 5;
+    }
+
 }
