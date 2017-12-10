@@ -87,16 +87,12 @@ public class MainActivity extends AppCompatActivity {
         Team team = Team.valueOf(view.getTag().toString());
         switch (team) {
             case A:
-                if (redCardsTeamA < 5) {
-                    redCardsTeamA += 1;
-                    displayCardsForTeamX(Team.A, Card.RED, redCardsTeamA);
-                }
+                redCardsTeamA += 1;
+                displayCardsForTeamX(Team.A, Card.RED, redCardsTeamA);
                 break;
             case B:
-                if (redCardsTeamB < 5) {
-                    redCardsTeamB += 1;
-                    displayCardsForTeamX(Team.B, Card.RED, redCardsTeamB);
-                }
+                redCardsTeamB += 1;
+                displayCardsForTeamX(Team.B, Card.RED, redCardsTeamB);
                 break;
         }
     }
