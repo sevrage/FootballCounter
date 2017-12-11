@@ -7,14 +7,10 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    public enum Team {
-        A,
-        B
-    }
-    public enum Card {
-        RED,
-        YELLOW
-    }
+    private static final String TEAM_A = "A";
+    private static final String TEAM_B = "B";
+    private static final String RED_CARD = "RED";
+    private static final String YELLOW_CARD = "YELLOW";
 
     int scoreTeamA = 0;
     int scoreTeamB = 0;
@@ -25,10 +21,26 @@ public class MainActivity extends AppCompatActivity {
     int yellowCardsTeamA = 0;
     int yellowCardsTeamB = 0;
 
+    TextView scoreView_A;
+    TextView scoreView_B;
+    TextView redCardView_A;
+    TextView redCardView_B;
+    TextView yellowCardView_A;
+    TextView yellowCardView_B;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        scoreView_A = findViewById(R.id.team_a_score);
+        scoreView_B = findViewById(R.id.team_b_score);
+
+        redCardView_A = findViewById(R.id.team_a_red);
+        redCardView_B = findViewById(R.id.team_b_red);
+
+        yellowCardView_A = findViewById(R.id.team_a_yellow);
+        yellowCardView_B = findViewById(R.id.team_b_yellow);
     }
 
     @Override
@@ -66,15 +78,14 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        Team team = Team.valueOf(view.getTag().toString());
-        switch (team) {
-            case A:
+        switch (view.getTag().toString()) {
+            case TEAM_A:
                 scoreTeamA += 1;
-                displayScoreForTeamX(Team.A, scoreTeamA);
+                displayScoreForTeamX(TEAM_A, scoreTeamA);
                 break;
-            case B:
+            case TEAM_B:
                 scoreTeamB += 1;
-                displayScoreForTeamX(Team.B, scoreTeamB);
+                displayScoreForTeamX(TEAM_B, scoreTeamB);
                 break;
         }
     }
@@ -83,16 +94,14 @@ public class MainActivity extends AppCompatActivity {
         if (maximumRedCards()) {
             return;
         }
-
-        Team team = Team.valueOf(view.getTag().toString());
-        switch (team) {
-            case A:
+        switch (view.getTag().toString()) {
+            case TEAM_A:
                 redCardsTeamA += 1;
-                displayCardsForTeamX(Team.A, Card.RED, redCardsTeamA);
+                displayCardsForTeamX(TEAM_A, RED_CARD, redCardsTeamA);
                 break;
-            case B:
+            case TEAM_B:
                 redCardsTeamB += 1;
-                displayCardsForTeamX(Team.B, Card.RED, redCardsTeamB);
+                displayCardsForTeamX(TEAM_B, RED_CARD, redCardsTeamB);
                 break;
         }
     }
@@ -102,55 +111,54 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        Team team = Team.valueOf(view.getTag().toString());
-        switch (team) {
-            case A:
+        switch (view.getTag().toString()) {
+            case TEAM_A:
                 yellowCardsTeamA += 1;
-                displayCardsForTeamX(Team.A, Card.YELLOW, yellowCardsTeamA);
+                displayCardsForTeamX(TEAM_A, YELLOW_CARD, yellowCardsTeamA);
                 break;
-            case B:
+            case TEAM_B:
                 yellowCardsTeamB += 1;
-                displayCardsForTeamX(Team.B, Card.YELLOW, yellowCardsTeamB);
+                displayCardsForTeamX(TEAM_B, YELLOW_CARD, yellowCardsTeamB);
                 break;
         }
     }
 
-    public void displayScoreForTeamX(Team team, int score) {
-        int viewId = 0;
+    public void displayScoreForTeamX(String team, int score) {
         switch (team) {
-            case A:
-                viewId = R.id.team_a_score;
+            case TEAM_A:
+                scoreView_A.setText(String.valueOf(score));
                 break;
-            case B:
-                viewId = R.id.team_b_score;
+            case TEAM_B:
+                scoreView_B.setText(String.valueOf(score));
                 break;
         }
-
-        TextView scoreView = findViewById(viewId);
-        scoreView.setText(String.valueOf(score));
     }
 
-    public void displayCardsForTeamX(Team team, Card card, int score) {
-        int viewId = 0;
+    public void displayCardsForTeamX(String team, String card, int score) {
         switch (team) {
-            case A: {
+            case TEAM_A: {
                 switch (card) {
-                    case RED: viewId = R.id.team_a_red; break;
-                    case YELLOW: viewId = R.id.team_a_yellow; break;
+                    case RED_CARD:
+                        redCardView_A.setText(String.valueOf(score));
+                        break;
+                    case YELLOW_CARD:
+                        yellowCardView_A.setText(String.valueOf(score));
+                        break;
                 }
                 break;
             }
-            case B: {
+            case TEAM_B: {
                 switch (card) {
-                    case RED: viewId = R.id.team_b_red; break;
-                    case YELLOW: viewId = R.id.team_b_yellow; break;
+                    case RED_CARD:
+                        redCardView_B.setText(String.valueOf(score));
+                        break;
+                    case YELLOW_CARD:
+                        yellowCardView_B.setText(String.valueOf(score));
+                        break;
                 }
                 break;
             }
         }
-
-        TextView scoreView = findViewById(viewId);
-        scoreView.setText(String.valueOf(score));
     }
 
     public void resetStats(View view) {
@@ -167,14 +175,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayStats() {
-        displayScoreForTeamX(Team.A, scoreTeamA);
-        displayScoreForTeamX(Team.B, scoreTeamB);
+        displayScoreForTeamX(TEAM_A, scoreTeamA);
+        displayScoreForTeamX(TEAM_B, scoreTeamB);
 
-        displayCardsForTeamX(Team.A, Card.RED, redCardsTeamA);
-        displayCardsForTeamX(Team.B, Card.RED, redCardsTeamB);
+        displayCardsForTeamX(TEAM_A, RED_CARD, redCardsTeamA);
+        displayCardsForTeamX(TEAM_B, RED_CARD, redCardsTeamB);
 
-        displayCardsForTeamX(Team.A, Card.YELLOW, yellowCardsTeamA);
-        displayCardsForTeamX(Team.B, Card.YELLOW, yellowCardsTeamB);
+        displayCardsForTeamX(TEAM_A, YELLOW_CARD, yellowCardsTeamA);
+        displayCardsForTeamX(TEAM_B, YELLOW_CARD, yellowCardsTeamB);
     }
 
     public  boolean maximumRedCards(){
